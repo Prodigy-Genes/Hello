@@ -1,18 +1,22 @@
 section .data
-	; this is a simple code to print out hello world in assembly language
-	msg db "Hello World, This is Prodigygenes! ", 0ah
-	
+	; Define a message to be printed on the screen
+	msg db "Hello World, This is Prodigygenes! ", 0ah ; 0ah represents a line feed character
+
 section .text
 	global _start
-	
+
 _start:
-	mov  rax, 1
-	mov  rdi, 1
-	mov  rsi, msg
-	mov  rdx, 41
-	syscall
-	
+	; Prepare registers for the write system call
+	mov  rax, 1   ; System call number 1 (sys_write)
+	mov  rdi, 1   ; File descriptor (stdout)
+	mov  rsi, msg ; Address of the message to be printed
+	mov  rdx, 41  ; Length of the message
+
+	syscall      ; Call the kernel to execute the system call
+
 _exit:
-	mov rax,  60
-	mov rdi,  0
-	syscall
+	; Prepare registers for the exit system call
+	mov rax,  60 ; System call number 60 (sys_exit)
+	mov rdi,  0  ; Exit status 0 (success)
+
+	syscall      ; Call the kernel to execute the system call
